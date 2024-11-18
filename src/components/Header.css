@@ -1,0 +1,60 @@
+/* Header container styles */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #005092; /* Softer UF Blue */
+    color: white;
+    padding: 10px 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* UF logo styling */
+  .logo {
+    background-color: #e06c00; /* Softer UF Orange */
+    color: white;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-right: 15px;
+    border-radius: 5px;
+  }
+  
+  /* Header left section */
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Department name styling */
+  .department-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-right: 20px;
+  }
+  
+  /* Center section for announcements */
+  .header-center {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 1.1rem;
+  }
+  
+  /* Header right section for icons */
+  .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Icons styling */
+  .icon {
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 1.4rem;
+  }
+  
+  /* Icon hover effect */
+  .icon:hover {
+    color: #e06c00; /* Softer Orange on hover */
+  }
+  
