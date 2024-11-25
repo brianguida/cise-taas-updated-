@@ -18,7 +18,16 @@ function App() {
           href="https://ufl.qualtrics.com/jfe/form/SV_5gMaPpNjF7lFKbs"
           className="cta-button"
         >
-          Access the Form
+          Access Student Form
+        </a>
+        <p>
+          Faculty please click here!
+        </p>
+        <a
+          href="https://ufl.qualtrics.com/jfe/form/SV_dcCSYDMtY3VGVhk"
+          className="cta-button"
+        >
+          Access Faculty Form
         </a>
       </main>
       <footer>

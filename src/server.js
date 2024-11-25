@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Temporary path to the FacultyResponses.csv file
-const facultyResponsesPath = './public/data/FacultyResponses.csv';
+const facultyResponsesPath = '../public/data/FacultyResponses.csv';
 
 // Ensure the CSV file exists, if not, create it
 const csvWriter = createCsvWriter({
@@ -127,7 +127,7 @@ app.get("/student-info", (req, res) => {
   }
 
   // Path to the student data CSV file in ../public/data
-  const studentDataPath = path.join(__dirname, "../public/data/CISE-TAAS_November 5, 2024_20.38.csv");
+  const studentDataPath = path.join(__dirname, "../public/data/student_responses.csv");
 
   const students = []; // Array to hold parsed student data
 
@@ -194,22 +194,35 @@ app.get("/student-info", (req, res) => {
     });
 });
 
-// Record a student's course selection and append to FacultyResponses.csv
-app.post('/record-selected-student', (req, res) => {
-  const { email, coursePrefix } = req.body;
-  console.log(`Recording selection: ${email} for course ${coursePrefix}`);
+// Record multiple students' course selections and append to FacultyResponses.csv
+app.post('/record-selected-students', (req, res) => {
+  const selectedStudents = req.body.selectedStudents;
 
-  // Write to the CSV file
-  csvWriter.writeRecords([{ email, coursePrefix }])
-      .then(() => {
-          console.log('Selection recorded in FacultyResponses.csv');
-          res.json({ message: 'Selection recorded successfully!' });
-      })
-      .catch((err) => {
-          console.error('Error writing to CSV:', err);
-          res.status(500).send('Error recording selection');
-      });
+  if (!selectedStudents || !Array.isArray(selectedStudents) || selectedStudents.length === 0) {
+    console.error("Invalid or empty selectedStudents payload.");
+    return res.status(400).json({ message: 'Invalid or empty selectedStudents payload.' });
+  }
+
+  // Map the selectedStudents array to extract only the required fields
+  const recordsToWrite = selectedStudents.map(student => ({
+    email: student.uflEmail,
+    coursePrefix: student.coursePrefix
+  }));
+
+  console.log("Records to write:", recordsToWrite);
+
+  // Write the records to the CSV file
+  csvWriter.writeRecords(recordsToWrite)
+    .then(() => {
+      console.log('Selections recorded in FacultyResponses.csv');
+      res.json({ message: 'Selections recorded successfully!' });
+    })
+    .catch((err) => {
+      console.error('Error writing to CSV:', err);
+      res.status(500).send('Error recording selections');
+    });
 });
+
 
 
 // Handle unrecording a selected student
